@@ -53,11 +53,11 @@ app.use(function(err, req, res, next) {
  }
 })
 
-app.listen(process.env.PORT  || 3000, function (err,data) {
+app.listen(3000, function (err,data) {
   if (err){
     throw err
   }
- console.log('Node.js listening on  ... ',process.env.PORT);
+ console.log('Node.js listening on  3000 ');
 });
 
 module.exports = app;

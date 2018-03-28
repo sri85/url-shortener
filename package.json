@@ -8,7 +8,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "./node_modules/mocha/bin/mocha --exit tests"
+    "test": "./node_modules/mocha/bin/mocha --exit tests "
   },
   "engines": {
     "node": "4.4.5"
