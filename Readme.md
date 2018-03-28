@@ -4,4 +4,5 @@
 
 # How to use this
 
-# Go to Github and click on Import Repository   ![Import](~/Desktop/filename.png Import Repository")
+# Go to Github and click on Import Repository and put the URL (https://github.com/sri85/fcc-boilerplate)[FCC-template]
+  and voila you are good to go
