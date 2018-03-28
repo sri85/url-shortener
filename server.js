@@ -51,7 +51,7 @@ app.use(function(err, req, res, next) {
      .type('txt')
      .send(err.message || 'SERVER ERROR');
  }
-})
+});
 
 app.listen(3000, function (err,data) {
   if (err){
