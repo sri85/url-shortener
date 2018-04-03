@@ -2,5 +2,8 @@
     "extends": "airbnb-base",
     "env": {
         "jasmine": true
+    },
+    "rules": {
+        "camelcase": [2, {"properties": "always"}]
     }
 }
