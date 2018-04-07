@@ -5,47 +5,52 @@
 
 const express = require('express');
 const boom = require('express-boom');
-const urlvalidator = require('./api/urlValidation');
+const urlvalidator = require('./api/urlUtils');
 const urlShortener = require('./api/urlShortener');
 
 const app = express();
 app.use(boom());
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
-app.get('/api/new/*', (request, response, next) => {
+app.get('/api/new/*', (request, response) => {
   const inputUrl = decodeURIComponent(request.params[0]);
-
-  // if (!(urlvalidator.isValid(inputUrl))) {
-  //   return next();
-  // }
-  // if (urlvalidator.isDuplicate(inputUrl)) {
-  //   return next();
-  // }
-
-  urlShortener.insertNew(inputUrl).then((insertedDocument) => {
-    console.log(`URL successfully shortened: http://www.example.com/${insertedDocument.shortCode}`); // We return the shortened URL);
+  if (!(urlvalidator.isValid(inputUrl))) {
+    response.boom.badRequest('URL is not valid').end();
+  }
+  (urlShortener.isDuplicate(inputUrl)).then((exists) => {
+    if (!exists) {
+      return urlShortener.insertNew(inputUrl).then((insertedDocument) => {
+        const responseBody = {
+          shortUrl: urlvalidator.createUrl(request, insertedDocument.shortCode),
+          originalUrl: inputUrl,
+        };
+        response.json(responseBody).end();
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+    response.boom.conflict(urlvalidator.createUrl(request, exists)).end();
   });
-
-
-  const responseBody = {
-    shortUrl: 'https://test.herokuapp.com/8170',
-    originalUrl: inputUrl,
-  };
-  response.json(responseBody);
 });
-// Error handler for invalid URL
-app.use((req, res) => {
-  res.boom.badRequest('URL is not valid');
-});
-// Error handler for duplicate URL a.k.a URL which have already been shortened
-app.use((req, res) => {
-  res.boom.conflict('URL already shortened');
+
+app.get('/:shortcode', (request, response) => {
+  const urlShortcode = parseInt(request.params.shortcode);
+  if (urlvalidator.isNumber(urlShortcode)) {
+    return urlShortener.getUrl(urlShortcode).then((url) => {
+      if (!url) {
+        response.boom.notFound('URL not found');
+      } else {
+        response.redirect(url.original);
+      }
+    });
+  }
 });
 
 app.listen(port, (err) => {
   if (err) {
     throw err;
   }
+  console.log(`URL shortener service is running on ${port} `);
 });
 
 module.exports = app;
