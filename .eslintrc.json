@@ -4,6 +4,7 @@
         "jasmine": true
     },
     "rules": {
-        "camelcase": [2, {"properties": "always"}]
+        "camelcase": [2, {"properties": "always"}],
+        "no-console": "off"
     }
 }
