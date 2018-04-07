@@ -1,17 +1,8 @@
-const mongoModel = require('./models/mongoClient');
 
-class URLValidation {
+class URLUtils {
   static isValid(url) {
     const validURLPattern = new RegExp('(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]\\.[^\\s]{2,})');
     return validURLPattern.test(url);
-  }
-  static getUrl(shortCode) {
-    if (this.isInputValid(shortCode)) {
-      return mongoModel
-        .findOne({ original: shortCode })
-        .then(doc => (doc ? doc.id : false));
-    }
-    return undefined;
   }
   static isNumber(shortCode) {
     if (this.isInputValid(shortCode)) {
@@ -24,6 +15,13 @@ class URLValidation {
   static isInputValid(input) {
     return input !== null || input !== undefined || !input.isNaN();
   }
+
+  static createUrl(request, url) {
+    return `${request.protocol}://${request.hostname}:${this.getPort()}/${url}`;
+  }
+  static getPort() {
+    return process.env.PORT || 8000;
+  }
 }
 
-module.exports = URLValidation;
+module.exports = URLUtils;
