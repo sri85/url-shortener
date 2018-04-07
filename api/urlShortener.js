@@ -1,10 +1,6 @@
 const URLShortenerModel = require('./models/mongoClient');
 
 class URLShortener {
-  // constructor(url) {
-  //   this.url = url;
-  // }
-
   static getShortCode() {
     return URLShortenerModel
       .find() // We search without criteria
@@ -29,7 +25,14 @@ class URLShortener {
       return newUrl.save();
     });
   }
+  static getUrl(shortCode) {
+    return URLShortenerModel
+      .findOne({ shortCode });
+  }
+  static isDuplicate(url) {
+    return URLShortenerModel
+      .findOne({ original: url })
+      .then(doc => (doc ? doc.shortCode : false));
+  }
 }
-
-
 module.exports = URLShortener;
