@@ -5,15 +5,14 @@ class UrlUtils {
     return validURLPattern.test(url);
   }
   static isNumber(shortCode) {
-    if (this.isInputValid(shortCode)) {
-      const pattern = new RegExp('^\\d+$');
-      return pattern.test(shortCode);
+    if (this.isInputInvalid(shortCode)) {
+      return undefined;
     }
-    return undefined;
+    return (typeof (shortCode) === 'number');
   }
 
-  static isInputValid(input) {
-    return !(input !== null || input !== undefined || !input.isNaN());
+  static isInputInvalid(input) {
+    return !(input !== null || input !== undefined || input !== '');
   }
 
   static createUrl(request, url) {

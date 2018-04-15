@@ -6,13 +6,10 @@ const urlUtil = require('../api/urlUtils');
 
 describe('URL Util test suite', () => {
   it('Url returns false  when a number is passed as an input', () => {
-    expect(urlUtil.isInputValid(null)).to.equal(false);
+    expect(urlUtil.isInputInvalid(null)).to.equal(false);
   });
   it('Url returns false  when a number is passed as an input', () => {
-    expect(urlUtil.isInputValid(undefined)).to.equal(false);
-  });
-  it('Url returns false  when a NaN is passed as an input', () => {
-    expect(urlUtil.isInputValid(NaN)).to.equal(false);
+    expect(urlUtil.isInputInvalid(undefined)).to.equal(false);
   });
   it('Url returns true when a valid URL is passed as an input', () => {
     expect(urlUtil.isValid('http://google.com')).to.equal(true);
@@ -29,4 +26,26 @@ describe('URL Util test suite', () => {
   it('Url returns true when a valid URL is passed as an input', () => {
     expect(urlUtil.isValid('https://www.google.pl')).to.equal(true);
   });
+  it('IsNumber returns true when a we pass a number', () => {
+    expect(urlUtil.isNumber(123)).to.equal(true);
+  });
+  it('IsNumber returns false when a we pass a null', () => {
+    expect(urlUtil.isNumber(null)).to.equal(false);
+  });
+  it('IsNumber returns true when a we pass a number', () => {
+    expect(urlUtil.isNumber(undefined)).to.equal(false);
+  });
+  it('IsNumber returns true when a we pass a number', () => {
+    expect(urlUtil.isNumber(undefined)).to.equal(false);
+  });
+  it('IsNumber returns true when a we pass a number', () => {
+    expect(urlUtil.isNumber('')).to.equal(false);
+  });
+  it('IsNumber returns true when a we pass a number', () => {
+    expect(urlUtil.isNumber('123')).to.equal(false);
+  });
+  it('CreateUrl formats the URL', () => {
+    expect(urlUtil.createUrl('123')).to.equal(false);
+  });
+
 });
