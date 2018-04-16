@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000;
 
 app.get('/api/new/*', (request, response) => {
   const inputUrl = decodeURIComponent(request.params[0]);
-  if (!(urlvalidator.isValid(inputUrl))) {
+  if (!(urlvalidator.isUrlValid(inputUrl))) {
     response.boom.badRequest('URL is not valid').end();
   }
   (urlShortener.isDuplicate(inputUrl)).then((exists) => {
