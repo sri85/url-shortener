@@ -15,8 +15,8 @@ class UrlUtils {
     return (input !== null && input !== undefined && input !== '');
   }
 
-  static createUrl(request, url) {
-    return `${request.protocol}://${request.hostname}:${this.getPort()}/${url}`;
+  static createUrl(request, shortCode) {
+    return `${request.protocol}://${request.hostname}:${this.getPort()}/${shortCode}`;
   }
   static getPort() {
     return process.env.PORT || 8000;
