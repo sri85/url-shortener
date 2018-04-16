@@ -17,6 +17,7 @@ describe('GET /', () => {
       });
   });
   it('API returns status code 404 when we pass an invalid route', (done) => {
+    // Todo: Mock Mongo
     chai.request(urlShortener)
       .get('/api/new/http://example.com')
       .end((err, res) => {
