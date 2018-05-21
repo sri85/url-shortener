@@ -4,7 +4,11 @@ Handling of mongo connections and defining schema for storing the shortened URL'
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost:27017/urlShortener');
+mongoose.connect('mongodb://localhost:27017/urlShortener').then(() =>{
+  console.log('Connected');
+}).catch(() => {
+  console.log('Error connecting');
+});
 
 
 //  Schema for URL Shortener
